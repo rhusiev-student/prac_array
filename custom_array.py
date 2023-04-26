@@ -9,10 +9,18 @@ class ArrayIterator:
 
     def __init__(self, array: Array) -> None:
         self._array = array
+        self._index = 0
 
     def __iter__(self):
-        for i in range(len(self._array)):
-            yield self._array[i]
+        return self
+
+    def __next__(self) -> object:
+        if self._index < len(self._array):
+            item = self._array[self._index]
+            self._index += 1
+            return item
+        else:
+            raise StopIteration
 
 
 class Array:
