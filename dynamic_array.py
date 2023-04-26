@@ -48,10 +48,25 @@ class DynamicArray:
         Pushes item into end of array.
         """
         if self._size == self._capacity:
-            self._resize(2 * self._capacity)
+            self._resize(int(1.25 * self._capacity) + 1)
 
         self.__array[self._size] = item
         self._size += 1
+
+    def remove(self, index):
+        """
+        Remove element from array.
+        """
+        if index < 0 or index >= self._size:
+            raise IndexError('Invalid index')
+
+        for i in range(index, self._size):
+            self[i] = self[i + 1]
+
+        self._size -= 1
+
+    def shrink_to_fit(self):
+        ...
 
     def __setitem__(self, index, item):
         if index < 0 or index >= self._size:
@@ -62,10 +77,30 @@ class DynamicArray:
         if index < 0 or index >= self._size:
             raise IndexError('Invalid index')
         return self.__array[index]
-    
+
     def __iter__(self):
-        ...
-    
+        iterator = DynamicArrayIterator(self.__array)
+        return iter(iterator)
+
 
 class DynamicArrayIterator:
-    ...
+    """
+    Iterator class for DynamicArray
+    """
+    def __init__(self, dyn_array):
+        if not isinstance(dyn_arr, DynamicArray):
+            raise TypeError("Must be instance of DynamicArray")
+
+        self.__dyn_array = dyn_array
+
+    def __iter__(self):
+        for i in range(len(self.__dyn_array)):
+            yield self.__dyn_array[i]
+
+dyn_arr = DynamicArray()
+dyn_arr.push_back("7aa88")
+dyn_arr.push_back(56)
+dyn_arr.push_back(12)
+
+for el in dyn_arr:
+    print(el)
