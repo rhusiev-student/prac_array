@@ -67,12 +67,13 @@ class DynamicArray:
             self[i] = self[i + 1]
 
         self._size -= 1
+        self.shrink_to_fit()
 
     def shrink_to_fit(self):
         """
         Set capacity equals to logic size.
         """
-        ...
+        self._resize(self._size)
 
     def __setitem__(self, index, item):
         if index < 0 or index >= self._size:
@@ -85,7 +86,7 @@ class DynamicArray:
         return self.__array[index]
 
     def __iter__(self):
-        iterator = DynamicArrayIterator(self.__array)
+        iterator = DynamicArrayIterator(self)
         return iter(iterator)
 
 
@@ -94,7 +95,7 @@ class DynamicArrayIterator:
     Iterator class for DynamicArray
     """
     def __init__(self, dyn_array):
-        if not isinstance(dyn_arr, DynamicArray):
+        if not isinstance(dyn_array, DynamicArray):
             raise TypeError("Must be instance of DynamicArray")
 
         self.__dyn_array = dyn_array
@@ -103,14 +104,3 @@ class DynamicArrayIterator:
         for i in range(len(self.__dyn_array)):
             yield self.__dyn_array[i]
 
-dyn_arr = DynamicArray()
-dyn_arr.push_back("7aa88")
-dyn_arr.push_back(56)
-dyn_arr.push_back(12)
-
-dyn_arr.remove(2)
-# dyn_arr.clear()
-# dyn_arr.remove(0)
-
-for el in dyn_arr:
-    print(el)
