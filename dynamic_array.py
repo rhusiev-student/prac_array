@@ -59,13 +59,19 @@ class DynamicArray:
         """
         if index < 0 or index >= self._size:
             raise IndexError('Invalid index')
-    
+
         for i in range(index, self._size):
+            if i == self._size - 1:
+                self[self._size - 1] = None
+                break
             self[i] = self[i + 1]
 
         self._size -= 1
 
     def shrink_to_fit(self):
+        """
+        Set capacity equals to logic size.
+        """
         ...
 
     def __setitem__(self, index, item):
@@ -102,11 +108,9 @@ dyn_arr.push_back("7aa88")
 dyn_arr.push_back(56)
 dyn_arr.push_back(12)
 
-for el in dyn_arr:
-    print(el)
-
-
-dyn_arr.remove(1)
+dyn_arr.remove(2)
+# dyn_arr.clear()
+# dyn_arr.remove(0)
 
 for el in dyn_arr:
     print(el)
