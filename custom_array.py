@@ -46,9 +46,13 @@ class Array:
             self._array[i] = value
 
     def __getitem__(self, index: int) -> object:
+        if index < 0 or index >= self._size:
+            raise IndexError("Invalid index")
         return self._array[index]
 
     def __setitem__(self, index: int, value: object) -> None:
+        if index < 0 or index >= self._size:
+            raise IndexError("Invalid index")
         self._array[index] = value
 
     def __iter__(self):
@@ -85,9 +89,17 @@ class Array2D(Array):
             self._array[i].clear(value)
 
     def __getitem__(self, index: tuple) -> object:
+        if index[0] < 0 or index[0] >= self._shape[0]:
+            raise IndexError("Invalid row index")
+        if index[1] < 0 or index[1] >= self._shape[1]:
+            raise IndexError("Invalid column index")
         return self._array[index[0]][index[1]]
 
     def __setitem__(self, index: tuple, value: object) -> None:
+        if index[0] < 0 or index[0] >= self._shape[0]:
+            raise IndexError("Invalid row index")
+        if index[1] < 0 or index[1] >= self._shape[1]:
+            raise IndexError("Invalid column index")
         self._array[index[0]][index[1]] = value
 
     def __str__(self) -> str:
